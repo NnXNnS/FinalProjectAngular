@@ -1,0 +1,117 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Bus Detail</h1>
+    <p class="mb-4">Agency owned buses</p>
+
+    <!--<editor-fold desc="Table Bus">-->
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <!--<editor-fold desc="Commended Title top table">-->
+        <!--                    <div class="card-header py-3">-->
+        <!--                        <h6 class="m-0 font-weight-bold text-primary">Buses</h6>-->
+        <!--                    </div>-->
+
+        <!--</editor-fold>-->
+        <div class="card-body">
+            <input class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm m-3" value="New" (click)="open(mymodal)"
+                type="button" />
+            <kendo-grid [data]="gridData" [pageSize]="gridState.take" [skip]="gridState.skip" [pageable]="true"
+                [sortable]="true" [height]="400" style="width:1100px" (pageChange)="pageChange($event)">
+                <kendo-grid-column field="id" title="ID" width="340">
+                </kendo-grid-column>
+                <kendo-grid-column field="code" title="Bus Code" width="300">
+                </kendo-grid-column>
+                <kendo-grid-column field="capacity" title="Capacity" width="80">
+                </kendo-grid-column>
+                <kendo-grid-column field="make" title="Make" width="150">
+                </kendo-grid-column>
+                <kendo-grid-column title="Action" field="id">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <input class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm m-1" value="Edit"
+                            (click)="openEdit(mymodalEdit,dataItem.id)" type="button" />
+                        <input class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm m-1" value="Delete"
+                            (click)="deleteBus(dataItem.id)" type="button" />
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Create New Bus</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Code</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.code">
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Capacity</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.capacity">
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Make</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.make">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cancel')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('save click')">Ok</button>
+    </div>
+</ng-template>
+
+<!-- The Modal Edit-->
+<ng-template #mymodalEdit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Bus</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus ID</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.id" disabled>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Code</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.code">
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Capacity</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.capacity">
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Make</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="bus.make">
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cancel')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('save click')">Ok</button>
+    </div>
+</ng-template>

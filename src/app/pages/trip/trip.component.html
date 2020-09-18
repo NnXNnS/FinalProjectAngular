@@ -1,0 +1,150 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Trip Detail</h1>
+
+    <!--<editor-fold desc="Table Bus">-->
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <!--<editor-fold desc="Commended Title top table">-->
+        <!--                    <div class="card-header py-3">-->
+        <!--                        <h6 class="m-0 font-weight-bold text-primary">Buses</h6>-->
+        <!--                    </div>-->
+
+        <!--</editor-fold>-->
+        <div class="card-body">
+            <input class="btn btn-sm btn-outline-primary m-3" value="New" type="button" (click)="open(mymodal)" />
+            <kendo-grid [data]="gridData" [pageSize]="pageSize" [skip]="skip" [pageable]="true" [height]="400"
+                (pageChange)="pageChange($event)">
+                <kendo-grid-column field="id" title="ID" width="340">
+                </kendo-grid-column>
+                <kendo-grid-column field="bus.code" title="Bus Code" width="300">
+                </kendo-grid-column>
+                <kendo-grid-column field="sourceStop.name" title="Source Stop" width="150">
+                </kendo-grid-column>
+                <kendo-grid-column field="destinationStop.name" title="Destination Stop" width="150">
+                </kendo-grid-column>
+                <kendo-grid-column field="journeyTime" title="Duration" width="150">
+                </kendo-grid-column>
+                <kendo-grid-column field="fare" title="Fare" width="150">
+                </kendo-grid-column>
+                <kendo-grid-column title="Action" field="id">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <input class="d-sm-inline-block btn btn-sm btn-outline-success m-1" value="Edit" type="button"
+                            (click)="openEdit(mymodalEdit,dataItem.id)" />
+                        <input class="d-sm-inline-block btn btn-sm btn-outline-danger m-1" value="Delete" type="button"
+                            (click)="deleteTrip(dataItem.id)" />
+                    </ng-template>
+                </kendo-grid-column>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Create New Trip</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Code</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <kendo-dropdownlist [data]="busList" textField="code" valueField="id" [(ngModel)]="selectedValue">
+            </kendo-dropdownlist>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Source Stop</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <kendo-dropdownlist [data]="stopList" textField="name" valueField="id" [(ngModel)]="selectedValueSource">
+            </kendo-dropdownlist>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Make</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <kendo-dropdownlist [data]="stopList" textField="name" valueField="id"
+                [(ngModel)]="selectedValueDestination">
+            </kendo-dropdownlist>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Duration</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="trip.journeyTime">
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Fare</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="trip.fare">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cancel')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('save click')">Ok</button>
+    </div>
+</ng-template>
+
+<!-- The Modal Edit-->
+<ng-template #mymodalEdit let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Edit Trip</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" style="margin-left: 10px;">
+            <h5>Trip ID</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="trip.id" disabled>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Code</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <kendo-dropdownlist [data]="busList" textField="code" valueField="id" [(ngModel)]="selectedValue">
+            </kendo-dropdownlist>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Source Stop</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <kendo-dropdownlist [data]="stopList" textField="name" valueField="id" [(ngModel)]="selectedValueSource">
+            </kendo-dropdownlist>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Bus Make</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <kendo-dropdownlist [data]="stopList" textField="name" valueField="id"
+                [(ngModel)]="selectedValueDestination">
+            </kendo-dropdownlist>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Duration</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="trip.journeyTime">
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <h5>Fare</h5>
+        </div>
+        <div class="row" style="margin-left: 10px;">
+            <input class="form-control col-sm-11" type="text" [(ngModel)]="trip.fare">
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cancel')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('save click')">Ok</button>
+    </div>
+</ng-template>
